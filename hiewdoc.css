@@ -2,12 +2,14 @@ img {
     width: 100%;
     max-width: 1000px;
 }
+
 table {
     width: 100%;
     max-width: 1500px;
     border: 1px solid gray;
     border-collapse: collapse;
 }
+
 .note {
     border-style: solid;
     border-width: thin;
@@ -16,6 +18,7 @@ table {
     padding: 0.5em;
     background-color: ivory;
 }
+
 .note::before {
     content: "Note: ";
     font-weight: bold;
@@ -27,18 +30,21 @@ table {
 
 tr {
     border: thin solid gray;
-    cursor: pointer;
 }
 
 tr:nth-child(even) {
     background-color: #fafafa;
 }
+
 tr:hover:not(:first-child) {
    background-color: aliceblue;
+   cursor: pointer;
 }
+
 .description {
     line-height: 150%;
 }
+
 #query {
     width: 100%;
     font-size: larger;
@@ -50,6 +56,7 @@ tr:hover:not(:first-child) {
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 .shortcut > span {
     width: 2.25em;
     height: 1.5em;
@@ -59,6 +66,7 @@ tr:hover:not(:first-child) {
     border-width: thick;
     float: left;
 }
+
 .key.inline {
     height: 1em;
     margin: 0.2em;
@@ -67,12 +75,14 @@ tr:hover:not(:first-child) {
     border-width: medium;
     font-weight: bold;
 }
+
 .key, .shortcut > span {
     border-style: outset;
     font-family: Sans-serif;
     text-align: center;
     background-image: linear-gradient(to right, #b1b1b1, #d8d8d8);
 }
+
 .shortcut > span::first-letter {
     text-transform: uppercase;
 }
