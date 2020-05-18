@@ -1,0 +1,690 @@
+<html>
+<head>
+    <link rel="stylesheet" href="hiewdoc.css">
+    <script type="text/javascript" src="hiewdoc.js">
+    </script>
+</head>
+<body onload="init()">
+
+<div id="search">
+    <input type="text" id="query" onkeyup="filter()" placeholder="Search for keys...">
+
+    <input class="filter" type="checkbox" id="block" onchange="filter()" checked=true>
+        <label for="block">Working with blocks.</label>
+        <br/>
+    <input class="filter" type="checkbox" id="hex" onchange="filter()" checked=true>
+        <label for="hex">Can be used in hex mode.</label>
+        <br/>
+    <input class="filter" type="checkbox" id="code" onchange="filter()" checked=true>
+        <label for="code">Can be used in code mode.</label>
+        <br/>
+    <input class="filter" type="checkbox" id="text" onchange="filter()" checked=true>
+        <label for="text">Can be used in text mode.</label>
+        <br/>
+    <input class="filter" type="checkbox" id="navigate" onchange="filter()" checked=true>
+        <label for="navigate">Navigating around files.</label>
+        <br/>
+    <input class="filter" type="checkbox" id="vt100" onchange="filter()" checked=true>
+        <label for="vt100">Requires a helper plugin when used in a vt terminal.</label>
+        <br/>
+    <input class="filter" type="checkbox" id="edit" onchange="filter()" checked=true>
+        <label for="edit">Can be used in editmode.</label>
+        <br/>
+    <input class="filter" type="checkbox" id="exe" onchange="filter()" checked=true>
+        <label for="edit">Features specific to executables.</label>
+        <br/>
+</div>
+
+<p></p>
+<p></p>
+<p></p>
+
+<table>
+    <tbody id="topics">
+      <tr class="header">
+        <th width="150px">Key</th>
+        <th>Description</th>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>*</span></td>
+        <td data-demo="select-block" class="description">
+        <div>
+            Mark/unmark a block, this is like visual mode in Vim, it selects a
+            contiguous region of bytes. Press <span class="inline key">*</span>
+            to start a block under cursor, then use the cursor keys to move to
+            extend the block. Press <span class="inline key">*</span> again to
+            mark the end. Only one block can be active at a time.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code vt100">
+        <td class="shortcut"><span>ctrl</span><span>*</span></td>
+        <td data-demo="block-all" class="description">
+        <div>
+            Add the whole file to the current block, this is useful if you want
+            to remove everything except the section you're working on. To do
+            that, type <span class="inline key">Ctrl</span><span class="inline key">*</span>,
+            move to the new end, and type <span class="inline key">Alt</span>
+            <span class="inline key">*</span>.
+            <div class="note">
+            You can also use this to exclude a section from a search, by
+            changing the search scope to block.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code vt100">
+        <td class="shortcut"><span>alt</span><span>*</span></td>
+        <td data-demo="block-all" class="description">
+        <div>
+            Resize block to current offset. Move the start of the current block
+            to the current cursor position.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>alt</span><span>m</span></td>
+        <td data-demo="assign-color" class="description">
+        <div>
+            <p>
+            Assign a color to the active block. You can change the colors
+            asssigned to different fields to help differentiate them quickly,
+            this is useful to mark header fields. Note that the color persists
+            even if you start a new block.
+            </p>
+            <p>
+            To move around in the color selection dialog, use <span
+            class="inline key">&larr;</span>, <span class="inline
+            key">&uarr;</span>, <span class="inline key">&darr;</span>, and
+            <span class="inline key">&rarr;</span>.
+            </p>
+            <p>
+            When you use colors, hiew will ask if you want to save them when
+            you exit. Colors are saved to a <code>.cmarkers</code> file
+            that is automatically reloaded when you start hiew.
+            </p>
+            <div class="note">
+            I like to group similar fields together with the same color, but
+            sometimes you just want to differentiate a field and don't care
+            which color is used, use <span class="inline key">Shift</span>
+            <span class="inline key">Alt</span><span class="inline
+            key">M</span>, which assigns a random color.
+            </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code navigate">
+        <td class="shortcut"><span>[</span></td>
+        <td data-demo="navigate-block" class="description">
+        <div>
+            Move to the start of the current block.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code navigate">
+        <td class="shortcut"><span>]</span></td>
+        <td data-demo="navigate-block" class="description">
+        <div>
+            Move to the end of the current block.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>ins</span></td>
+        <td data-demo="read-block" class="description">
+        <div>
+            Toggle insert/overwrite block mode, the current mode is displayed
+            in the status indicator.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>f2</span></td>
+        <td data-demo="write-block" class="description">
+        <div>
+            Write block, save the current block to a file.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>ctrl</span><span>f2</span></td>
+        <td data-demo="read-block" class="description">
+        <div>
+            Read block, insert or overwrite data with contents from a file. Use
+            <span class="inline key">Ins</span> to toggle insert or overwrite
+            mode.
+            <div class="note">
+                The block is inserted at the current cursor location, so
+                position it at the start of the block with <span class="inline
+                key">[</span> if necessary.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>alt</span><span>f2</span></td>
+        <td data-demo="fill-block edit-code" class="description">
+        <div>
+            Fill block, fill the selected block with a repeating pattern. This
+            is usually used with a single byte, e.g. <code>nop</code>, but you
+            can insert a pattern of any length.
+            <br/>
+            If you use this shortcut in code view without an active block, the
+            current instruction will be <code>nop</code>ped, this is handy if
+            you want to eliminate an unwanted <code>call</code>.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>shift</span><span>f2</span></td>
+        <td data-demo="delete-block" class="description">
+        <div>
+            Delete marked block, the block is removed and the file truncated.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>shift</span><span>f5</span></td>
+        <td data-demo="copy-block" class="description">
+        <div>
+            Copy marked block, this duplicates the active block at the current
+            cursor position. This operation can use insert or overwrite mode,
+            use <span class="inline key">Ins</span> to toggle it.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="block hex code">
+        <td class="shortcut"><span>shift</span><span>f6</span></td>
+        <td data-demo="move-block" class="description">
+        <div>
+            Move marked block, this is a copy and delete operation in one.
+            This operation can use insert or overwrite mode, use <span
+            class="inline key">Ins</span> to toggle it.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="text hex code navigate">
+        <td class="shortcut"><span>+</span></td>
+        <td data-demo="bookmark-state" class="description">
+        <div>
+            Save the current location to the bookmarks stack. Bookmarks
+            are quick and easy ways to jump around and explore, but only
+            a limited number are available.
+
+            <div class="note">
+            Hiew can only save 8 bookmarks. If you need more than that you
+            should use comments instead with <span class="inline
+            key">;</span>. You can add an unlimited number of comments, which
+            are added to the Names window. You can also name a location with
+            <span class="inline key">Shift</span> <span class="inline
+            key">F12</span>.
+            </div>
+            <div class="note">
+            Each view (hex, text, code) has it's own bookmark stack. Changing
+            view will not discard bookmarks.
+            </span>
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="text hex code navigate">
+        <td class="shortcut"><span>-</span></td>
+        <td data-demo="bookmark-state" class="description">
+        <div>
+            Restore the last bookmarks state. The last state is indicated
+            by a diamond symbol in the bookmark indicator. See also <span
+            class="inline key">BkSp</span> and <span class="inline
+            key">0</span>.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="text hex code navigate">
+        <td class="shortcut"><span>alt</span><span>-</span></td>
+        <td data-demo="state-indicator" class="description">
+        <div>
+            Delete current bookmark, the current bookmark is indicated
+            by a diamond symbol in the bookmark indicator.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="text hex code navigate">
+        <td class="shortcut"><span>alt</span><span>0</span></td>
+        <td data-demo="bookmark-state" class="description">
+        <div>
+            Clear all bookmarks.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="text hex code navigate">
+        <td class="shortcut"><span>bksp</span></td>
+        <td data-demo="backspace" class="description">
+        <div>
+            Return to the previous location. For example, if you use <span
+            class="inline key">F5</span> to jump to an offset and change your
+            mind, use this to return quickly.
+            <br/>
+            This is also useful if you want to follow a <code>call</code> or
+            <code>jmp</code> in code view, then want to return. Following
+            branches uses the number keys in code view, see e.g. <span
+            class="inline key">1</span>, <span class="inline key">2</span>, etc.
+            <br/>
+            For following offsets or references, see e.g. <span
+            class="inline key">F6</span>, <span class="inline
+            key">Shift</span><span class="inline key">F9</span>, <span
+            class="inline key">Shift</span><span class="inline key">F10</span>,
+            <span class="inline key">Shift</span><span class="inline
+            key">F11</span>, and others.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="text hex code navigate">
+        <td class="shortcut">
+            <span>Alt</span><span>1</span><br/>
+            <span>Alt</span><span>2</span><br/>
+            <span>Alt</span><span>3</span><br/>
+            <span>Alt</span><span>4</span><br/>
+            <span>Alt</span><span>5</span><br/>
+            <span>Alt</span><span>6</span><br/>
+            <span>Alt</span><span>7</span><br/>
+            <span>Alt</span><span>8</span><br/>
+        </td>
+        <td data-demo="state-indicator" class="description">
+        <div>
+            Restore a saved bookmark by number. Bookmarks are saved with <span
+            class="inline key">+</span>.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="text hex code vt100">
+        <td class="shortcut"><span>ctrl</span><span>.</span></td>
+        <td data-demo="record-macro" class="description">
+        <div>
+            Start or stop recording a macro. An 'R' is displayed in the title
+            bar, and all actions are recorded. Macros can be saved, loaded,
+            organized, played and configured from the macro manager, <span
+            class="inline key">Ctrl</span><span class="inline key">-</span>.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="text hex code">
+        <td class="shortcut">
+            <span>ctrl</span><span>0</span><br/>
+            <span>ctrl</span><span>1</span><br/>
+            <span>ctrl</span><span>2</span><br/>
+            <span>ctrl</span><span>3</span><br/>
+            <span>ctrl</span><span>4</span><br/>
+            <span>ctrl</span><span>5</span><br/>
+            <span>ctrl</span><span>6</span><br/>
+            <span>ctrl</span><span>7</span><br/>
+            <span>ctrl</span><span>8</span><br/>
+        </td>
+        <td class="description">
+        <div>
+            Play a saved macro by number. Macros can be saved, loaded,
+            organized, played and configured from the macro manager, <span
+            class="inline key">Ctrl</span><span class="inline key">-</span>.
+        </div>
+        </td>
+      </tr>
+      <!-- Hex View -->
+      <tr data-tags="hex code text">
+        <td class="shortcut"><span>Enter</span></td>
+        <td data-demo="mode-switch" class="description">
+        <div>
+            Switch to Hex, Code, or Text mode. You can safely switch modes
+            without losing any context. I'm used to quickly switching through
+            modes if I'm not sure what the data I'm looking at is.
+            <br/>
+            See also, <span class="inline key">F4</span>.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text bug">
+        <td class="shortcut"><span>Esc</span></td>
+        <td data-demo="exit-hiew" class="description">
+        <div>
+            In hex, code or text mode, <span class="inline key">Esc</span> will
+            exit hiew without updating the timestamp of the file. If you do
+            want to update the timestamp, use <span class="inline key">F10</span>.
+            <div class="note">
+            The <span class="inline key">Esc</span> key usually cancels or
+            exits the current mode, it only exits Hiew if there is no other
+            operation to cancel.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text">
+        <td class="shortcut"><span>Tab</span></td>
+        <td data-demo="next-file" class="description">
+        <div>
+            Open the next file from file history. From within Hiew, you can
+            open a new file with <span class="inline key">F9</span>, then
+            quickly switch between open files with <span class="inline
+            key">Tab</span>. This is the equivalent of <code>:tabnew</code>
+            then <code>:tabnext</code> in vim, or buffers in emacs.
+            <div class="note">
+            Use the file history manager to manage open files, <span
+            class="inline key">Ctrl</span><span class="inline key">BkSp</span>.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text">
+        <td class="shortcut"><span>alt</span><span>b</span></td>
+        <td class="description">
+        <div>
+            Enable or disable beeps.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text">
+        <td class="shortcut"><span>alt</span><span>p</span></td>
+        <td data-demo="screenshot" class="description">
+        <div>
+            Save a (text) screenshot of the current screen for future
+            reference. The screen can be saved to a file, or to the clipboard.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text">
+        <td class="shortcut"><span>alt</span><span>=</span></td>
+        <td data-demo="calculator" class="description">
+        <div>
+            Start calculator. The calculator is a 64bit programming calculator,
+            supports the standard C logical, bitwise, and comparison operators.
+            <br/>
+            You can enter numbers using C notation, or masm-like suffixes
+            (0fffh), octal, binary, decimal and hex are supported.
+            <br/>
+            The most useful feature is reading data from the cursor to use in
+            calculations, to do this use <code>@</code> followed by a type
+            code.
+            <br/>
+            For example, to multiply the QWORD under the cursor by two, use
+            <code>@Q*2</code>.
+            <br/>
+            The calculator remembers it's state, so it's safe to close it and
+            look around, then return to it when you need to.
+            </br>
+            <div class="note">
+            The calculator is the best way to see what a value is
+            in other bases, simply open the calculator and type
+            <code>@D</code><span class="inline key">Enter</span> to see the
+            <code>DWORD</code> under the cursor in binary, hex and decimal.
+            </div>
+            <table>
+                <tr><th>Operator</th><th>Meaning</th></tr>
+                <tr><td>+</td><td>Sum</td></tr>
+                <tr><td>-</td><td>Difference</td></tr>
+                <tr><td>*</td><td>Product</td></tr>
+                <tr><td>/</td><td>Quotient</td></tr>
+                <tr><td>%</td><td>Remainder</td></tr>
+                <tr><td>~</td><td>Bitwise Not</td></tr>
+                <tr><td>&amp;</td><td>Bitwise And</td></tr>
+                <tr><td>^</td><td>Bitwise Xor</td></tr>
+                <tr><td>|</td><td>Bitwise Or</td></tr>
+                <tr><td>!</td><td>Logical Not</td></tr>
+                <tr><td>&amp;&amp;</td><td>Logical And</td></tr>
+                <tr><td>||</td><td>Logical Or</td></tr>
+                <tr><td>&lt;</td><td>Less than</td></tr>
+                <tr><td>&gt;</td><td>Greater than</td></tr>
+                <tr><td>&gt;=</td><td>Greater than or Equal</td></tr>
+                <tr><td>&lt;=</td><td>Less than or Equal</td></tr>
+                <tr><td>&lt;&lt;</td><td>Shift Left</td></tr>
+                <tr><td>&gt;&gt;</td><td>Shift Right</td></tr>
+                <tr><td>==</td><td>Equal</td></tr>
+                <tr><td>!=</td><td>Not Equal</td></tr>
+            </table>
+            </br>
+            <table>
+                <tr><th>Prefix / Suffix</th><th>Base</th></tr>
+                <tr><td>0..</td><td>octal</td></tr>
+                <tr><td>0x..</td><td>hexadecimal</td></tr>
+                <tr><td>..i</td><td>binary</td></tr>
+                <tr><td>..o</td><td>octal</td></tr>
+                <tr><td>..t</td><td>decimal</td></tr>
+                <tr><td>..h</td><td>hex</td></tr>
+            </table>
+            </br>
+            <table>
+                <tr><th>@code</th><th>Meaning</th></tr>
+                <tr><td>@b</td><td>signed char</td></tr>
+                <tr><td>@B</td><td>unsigned char</td></tr>
+                <tr><td>@w</td><td>signed short</td></tr>
+                <tr><td>@W</td><td>unsigned short</td></tr>
+                <tr><td>@d</td><td>signed long</td></tr>
+                <tr><td>@D</td><td>unsigned long</td></tr>
+                <tr><td>@q</td><td>signed long long</td></tr>
+                <tr><td>@Q</td><td>unsigned long long</td></tr>
+                <tr><td>@o</td><td>local offset</td></tr>
+                <tr><td>@O</td><td>global offset</td></tr>
+            </table>
+
+            <div class="note">
+            As far as I'm aware there is no way to use the <code>@</code>
+            syntax in anything other than little endian byte order. If you need
+            big endian i.e. network byte order, then you will have to shift the
+            bytes around with <code>&lt;&lt;</code> and <code>|</code>.
+            If you need that a lot, make a macro with <span class="inline
+            key">Ctrl</span><span class="inline key">.</span>.
+            </div>
+            <div class="note">
+            The default input base is hex, this won't be surprising if you've
+            used windbg, but might be surprising if you're used to gdb. Append
+            a <code>t</code> to decimal numbers.
+            </div>
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text vt100">
+        <td class="shortcut"><span>ctrl</span><span>alt</span></td>
+        <td class="description">
+        <div>
+            Show some information about the current file, hiew, and the system.
+            Includes full path, file size, free memory, the last error message
+            displayed, and so on.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text vt100">
+        <td class="shortcut"><span>ctrl</span><span>BkSp</span></td>
+        <td data-demo="file-history" class="description">
+        <div>
+            Shows a list of all opened files, and allows you to switch between
+            them, or close them.
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text">
+        <td class="shortcut"><span>ctrl</span><span>enter</span></td>
+        <td data-demo="search-next" class="description">
+        <div>
+            If a previous search exists, find the next match. If you don't have
+            a previous search, hiew will prompt you for one.
+            See also <span class="inline key">F7</span>.
+            <div class="note">
+            If you want to change the string encoding (e.g. unicode), see <span
+            class="inline key">Alt</span><span class="inline key">F8</span>.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code">
+        <td class="shortcut"><span>;</span></td>
+        <td data-demo="add-comment add-code-comment" class="description">
+        <div>
+            <p>
+            Enter a comment for the current instruction or location. Comments
+            are displayed when the cursor is over the commented location. If
+            you to search, browse or go to a previous comment, use the Names
+            window, <span class="inline key">F12</span>.
+            </p>
+            <p>
+            Comments can be saved and loaded between sessions, or imported from
+            plain text files. The format for importing or exporting from text
+            is simply <code>offset *comment</code>.
+            Offset can be any hiew offset format, see <span class="inline
+            key">F5</span>. The <code>*</code> is required.
+            </p>
+            <div class="note">
+            A location can have a name and a comment.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code">
+        <td class="shortcut"><span>F3</span></td>
+        <td data-demo="edit-hex edit-code" class="description">
+        <div>
+            <p>
+            Enter edit mode. The cursor changes to a caret and the bookmark
+            indicator displays "EDITMODE".
+            </p>
+            <p>
+            To exit from editmode, press <span class="inline key">Esc</span> to
+            exit and discard your changes, or <span class="inline
+            key">F9</span> to exit and save them.
+            </p>
+            <p>
+            In hex mode, use <span class="inline key">Tab</span> to switch
+            between hex and character input. In code mode, <span class="inline
+            key">Tab</span> switches between opcodes (hex) and assembler mode.
+            </p>
+            <div class="note">
+            The default cursor is a block &block;, and the edit cursor is a
+            caret &vert;.
+            </div>
+            <div class="note">
+            In hex mode, you can choose what character set to use, you don't
+            have to manually enter NULs for UTF-16 strings! Use the translation
+            table, which is <span class="inline key">Alt</span><span
+            class="inline key">F8</span>.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text navigate">
+        <td class="shortcut"><span>F5</span></td>
+        <td data-demo="goto" class="description">
+        <div>
+            <p>
+            Goto offset. You can enter a relative offset, absolute offset, or
+            virtual address.
+            </p>
+
+            <div class="note">
+            The default input base is hexadecimal. If you want decimal, use the
+            <code>t</code> suffix, e.g. <code>189t</code>. See the notes on
+            the calculator for more number format information, <span
+            class="inline key">Alt</span><span class="inline key">=</span>.
+            </div>
+            <p>
+            <ul>
+                <li>To enter an offset relative to the current position, use
+                <code>+offset</code> or <code>-offset</code>.</li>
+                <li>To enter an absolute offset, use <code>offset</code>.
+                <li>To enter a virtual address, use <code>.address</code>.
+            </ul>
+            </p>
+            <div class="note">
+            If you're navigating around a file, you probably want something
+            like <span class="inline key">Shift</span><span class="inline
+            key">F9</span> to follow the offset under the cursor, there are
+            many variants of this operation.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code navigate">
+        <td class="shortcut"><span>F6</span></td>
+        <td data-demo="datref" class="description">
+        <div>
+            <p>
+            Find code references to this location, use <span class="inline
+            key">Ctrl</span><span class="inline key">F6</span> to find the next
+            match and <span class="inline key">BkSp</span> to go back.
+            </p>
+            <p>
+            This is similar to xrefs in IDA, it will find the next location
+            that <code>call</code>s or <code>jmp</code>s to the current
+            address. Therefore, this is mostly useful when the cursor is on a
+            function entry point.
+            </p>
+            <div class="note">
+            This works well for quickly navigating, but use IDA if you need
+            this to be reliable.
+            </div>
+            <div class="note">
+            If you want to find all references to an import, select the import
+            from the import view, <span class="inline key">F8</span><span
+            class="inline key">F7</span>, then choose one with <span
+            class="inline key">Enter</span>, then keep pressing <span
+            class="inline key">Ctrl</span><span class="inline key">Enter</span>
+            to cycle through them. You can also filter by DLL, ordinal, and so
+            on.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text navigate block">
+        <td class="shortcut"><span>f7</span></td>
+        <td data-demo="search-next" class="description">
+        <div>
+            <p>
+            Search for a string, instruction, or sequence of bytes. To switch
+            between string and hex entry, use <span class="inline
+            key">Tab</span>. <span class="inline key">Esc</span> will cancel
+            the search.
+            </br>
+            To repeat the last search, use <span class="inline
+            key">Ctrl</span><span class="inline key">Enter</span>.
+            </p>
+            <p>
+            While in the search dialog, you can select:
+            </p>
+            <ul>
+            <li><span class="inline key">F2</span>Search direction (backwards/forwards).</li>
+            <li><span class="inline key">F4</span>Search scope (file, or active block).</li>
+            <li><span class="inline key">F6</span>Toggle UTF-16 LE/BE mode.</li>
+            <li><span class="inline key">F7</span>Call assembler to search for an instruction.</li>
+            </ul>
+            <div class="note">
+            You can't toggle between unicode/ascii searches from within the search
+            dialog, do that first with <span class="inline key">Alt</span><span
+            class="inline key">F8</span>.
+            </div>
+            <div class="note">
+            For some reason, hiew calls UTF16-LE "Even Unicode" and UTF16-BE
+            "Odd Unicode", keep this in mind when reading Hiew documentation.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code exe">
+        <td class="shortcut"><span>f8</span></td>
+        <td data-demo="exe-headers" class="description">
+        <div>
+            <p>
+            View and edit PE, ELF, Mach-o etc headers. Hiew supports most
+            common EXE formats. When applicable, many tables can be browsed and
+            edited with <span class="inline key">F3</span>. Some of the common
+            tables are, imports <span class="inline key">F7</span>,
+            exports <span class="inline key">F9</span>, sections <span
+            class="inline key">F6</span>, and so on.
+            </p>
+            <p>
+            If you want to go to the entry point, the quickest way is <span
+            class="inline key">F8</span><span class="inline key">F5</span>.
+            </p>
+            <div class="note">
+            If you are not editing an executable file, then this view will
+            show some minimal com header.
+            </div>
+        </div>
+        </td>
+      </tr>
+    </tbody>
+</table>
+</body>
+</html>

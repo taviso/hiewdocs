@@ -1,0 +1,74 @@
+img {
+width: 100%;
+       max-width: 1000px;
+}
+table {
+width: 100%;
+       max-width: 1500px;
+border: 1px solid gray;
+        border-collapse: collapse;
+}
+.note {
+    border-style: solid;
+    border-width: thin;
+    border-color: red;
+margin: 1em;
+padding: 0.5em;
+         background-color: ivory;
+}
+.note::before {
+content: "Note: ";
+         font-weight: bold;
+}
+.shortcut, .tags {
+width: 20%;
+}
+tr {
+border: thin solid gray;
+}
+tr:nth-child(even) {
+       background-color: #fafafa;
+   }
+tr:hover:not(:first-child) {
+       background-color: aliceblue;
+   }
+.description {
+    line-height: 150%;
+}
+#query {
+width: 100%;
+       font-size: larger;
+padding: 0.25em;
+         text-indent: 2em;
+         border-style: solid gray;
+         border-width: thin;
+         background-image: url('icons8-search-512.png');
+         background-repeat: no-repeat;
+         background-size: contain;
+}
+.shortcut > span {
+width: 2.25em;
+height: 1.5em;
+padding: 0.25em;
+margin: 0.25em;
+        font-size: larger;
+        border-width: thick;
+float: left;
+}
+.key.inline {
+height: 1em;
+margin: 0.2em;
+padding: 0.1em 0.5em 0.1em 0.5em;
+         font-size: small;
+         border-width: medium;
+         font-weight: bold;
+}
+.key, .shortcut > span {
+    border-style: outset;
+    font-family: Sans-serif;
+    text-align: center;
+    background-image: linear-gradient(to right, #b1b1b1, #d8d8d8);
+}
+.shortcut > span::first-letter {
+    text-transform: uppercase;
+}
