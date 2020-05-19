@@ -44,10 +44,14 @@ function filter()
     var filters = Array.from(document.getElementsByClassName("filter"));
 
     rows.forEach(row => {
+        var rowtext = row.innerText.toUpperCase();
         var filtered = false;
 
+        // Normalize the row text.
+        rowtext = rowtext.replace(/\n/g,"").replace(/ +/g, " ");
+
         // Check if the search text matches.
-        if (row.innerText.toUpperCase().search(q) < 0) {
+        if (rowtext.search(q) < 0) {
             row.style.display = "none";
             return;
         }
