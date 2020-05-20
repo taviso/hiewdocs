@@ -15,6 +15,7 @@ think some searchable online help might help.
 
 If you're a regular Hiew user, pull Requests, corrections, etc, are all appreciated!
 
-# Author
+# Authors
 
 Tavis Ormandy <taviso@gmail.com>
+Ange Albertini @angea
