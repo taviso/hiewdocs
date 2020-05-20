@@ -393,6 +393,25 @@
         </td>
       </tr>
       <tr data-tags="hex code text">
+        <td class="shortcut">
+            <span>Ctrl</span><span>F11</span><br/>
+            <span>Ctrl</span><span>F12</span><br/>
+        </td>
+        <td class="description">
+        <div>
+            Open the previous/next file in command line arguments.
+            <div class="note">
+            Also works when used with a wildcard parameter like <code>*.exe</code>.
+            </div>
+            <div class="note">
+            Even more useful when opened with a specific opening parameter such as
+            <code>/oc=oep</code> for example, which directly show disassembly
+            at the entry point of every file in the command line.
+            </div>
+        </div>
+        </td>
+      </tr>
+      <tr data-tags="hex code text">
         <td class="shortcut"><span>alt</span><span>b</span></td>
         <td class="description">
         <div>
@@ -406,6 +425,11 @@
         <div>
             Save a (text) screenshot of the current screen for future
             reference. The screen can be saved to a file, or to the clipboard.
+            <div class="note">
+            The <span class="inline key">Shift</span> <span class="inline key">F4</span>
+            Print Block command does the same with the currently selected block,
+            which can be as small or as big as needed.
+            </div>
         </div>
         </td>
       </tr>
@@ -495,6 +519,10 @@
             The default input base is hex, this won't be surprising if you've
             used windbg, but might be surprising if you're used to gdb. Append
             a <code>t</code> to decimal numbers.
+            </div>
+            <div class="note">
+            Use the <span class="inline key">Up</span>/<span class="inline key">Down</span>
+            keys to move the calculator around.
             </div>
             </div>
         </div>
@@ -616,6 +644,9 @@
             key">F9</span> to follow the offset under the cursor, there are
             many variants of this operation.
             </div>
+            <div class="note">
+            Use <span class="inline key">PgDn</span> to show the entry history.
+            </div>
         </div>
         </td>
       </tr>
@@ -680,6 +711,14 @@
             <div class="note">
             For some reason, hiew calls UTF16-LE "Even Unicode" and UTF16-BE
             "Odd Unicode", keep this in mind when reading Hiew documentation.
+            </div>
+            <div class="note">
+            If you type more than 3 non-Hex characters in the Hex entry (which is the default one),
+            it will automagically switch to ASCII and remember what you typed so far.
+            </div>
+            <div class="note">
+            You can type single-char wildcards in your search with
+            <span class="inline key">Alt</span><span class="inline key">?</span>.
             </div>
         </div>
         </td>
