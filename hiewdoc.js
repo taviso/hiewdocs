@@ -36,6 +36,14 @@ function init()
             }
         });
     });
+
+    // Initialize search query from URL
+    let params = new URLSearchParams(document.location.search);
+
+    if (params.get("query")) {
+        query.value = params.get("query");
+        filter();
+    }
 }
 
 function filter()
