@@ -17,5 +17,5 @@ If you're a regular Hiew user, pull Requests, corrections, etc, are all apprecia
 
 # Authors
 
-Tavis Ormandy <taviso@gmail.com>
-Ange Albertini @angea
+- Tavis Ormandy <taviso@gmail.com>
+- Ange Albertini @angea
