@@ -6,6 +6,7 @@ The current documentation is online here:
 
 [https://taviso.github.io/hiewdocs/index.htm](https://taviso.github.io/hiewdocs/index.htm)
 
+There is also a [Hiew FAQ](https://github.com/taviso/hiewdocs/wiki/Frequently-Asked-Questions) available in the [wiki](https://github.com/taviso/hiewdocs/wiki/).
 
 I think new Hiew users might be discouraged because many features are not
 easily discoverable, and Googling for hints is unlikely to find any answers. I
