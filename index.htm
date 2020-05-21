@@ -869,7 +869,52 @@
         </div>
         </td>
       </tr>
-  </tbody>
+      <tr data-tags="block hex code edit">
+        <td class="shortcut">
+            <span>alt</span><span>f3</span>
+         </td>
+        <td data-demo="crypt" class="description">
+        <div>
+            <p>
+            Opens the Crypt dialog.
+            It's an editor for a tiny subset of x86 to manipulate data.
+            Choose the data size it's operating with <span class="inline key">F2</span>.
+            </p>
+            <p>
+            The rules:
+            <ul>
+                <li>At the start of each loop iteration, AL/AX/EAX/RAX gets the data under the current pointer.</li>
+                <li>The code loops automatically at position 1 if it's not specified.</li>
+                <li>At the end of the loop, the current value in AL/AX/EAX/RAX gets written at the pointer
+                before it's incremented.</li>
+            </ul>
+            </p>
+            <p>
+            For example, this code in Byte mode will fill the current block with <code>00 01 02 03 04</code>...:
+            </p>
+            <p>
+            <code>
+                1 mov al, cl<br>
+                2 add cl, 1<br>
+            </code>
+            </p>
+            <p>
+            Explanation:
+            <ol>
+                <li>CL's current value is copied to AL (CL is initially set to 0).</li>
+                <li>CL value is incremented.</li>
+                <li>The code is finished, so AL's value will be copied to the start of the block,
+                the pointer will be incremented by one, and the crypt interpreter loops to 1,
+                which will load the next data value to AL.</li>
+            </ol>
+            </p>
+            <div class="note">
+            You can also use the output of the Crypt interpreter while editing with <span class="inline key">F7</span>.
+            When editing, you can open the Crypt dialog again with <span class="inline key">Ctrl</span><span class="inline key">F7</span>.
+            </div>
+        </div>
+        </td>
+      </tr>  </tbody>
 </table>
 </body>
 </html>
