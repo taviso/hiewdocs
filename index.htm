@@ -72,11 +72,31 @@
         <td class="shortcut"><span>*</span></td>
         <td data-demo="select-block" class="description">
         <div>
+            <p>
             Mark/unmark a block, this is like visual mode in Vim, it selects a
             contiguous region of bytes. Press <span class="inline key">*</span>
             to start a block under cursor, then use the cursor keys to move to
             extend the block. Press <span class="inline key">*</span> again to
             mark the end. Only one block can be active at a time.
+            </p>
+            <p>
+            You can use most navigation shortcuts while marking a block, here
+            are some common examples:
+            <ul>
+                <li>Mark to the end of the file, use <span class="inline
+                key">*</span><span class="inline key">Ctrl</span> <span
+                class="inline key">End</span></li>
+                <li>Mark to the beginning of the file, use <span class="inline
+                key">*</span><span class="inline key">Ctrl</span><span
+                class="inline key">Home</span></li>
+                <li>Mark until search result, use <span class="inline
+                key">*</span><span class="inline key">F7</span>, or <span
+                class="inline key">Ctrl</span><span
+                class="inline key">Enter</span> for next match</li>
+                <li>Mark from here until offset, use <span class="inline
+                key">*</span><span class="inline key">F5</span>.</li>
+            </ul>
+            </p>
         </div>
         </td>
       </tr>
