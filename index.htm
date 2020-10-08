@@ -970,6 +970,42 @@
         </div>
         </td>
       </tr>
+      <tr data-tags="code hex">
+        <td class="shortcut">
+            <span>f12</span>
+         </td>
+        <td data-demo="names-view" class="description">
+        <div>
+            <p>
+            Open the Names window, which allows you to browse symbols and
+            comments. You can name any location in a file by moving the cursor
+            there and pressing <span class="inline key">Shift</span><span
+            class="inline key">F12</span>.
+            </p>
+            <p>
+            Each location can have a name and a comment, to add comments see
+            <span class="inline key">;</span>.
+            </p>
+            <div class="note">
+            Comments are prefixed with a <b>;</b> symbol.
+            </div>
+            <p>
+            Hiew uses a binary format for saving names by default. If you want
+            to import names from another tool, use <span class="inline
+            key">F12</span> instead. This can parse a simple text format, here
+            is an example:
+            <br>
+            <pre>.00000001`40000050  Symbol</pre>
+            Hiew can also produce this format for other tools, use <span
+            class="inline key">Shift</span><span class="inline key">F12</span>.
+            </p>
+            <div class="note">
+            You can use something like this to export names from an ELF file.<br>
+                <pre>$ nm a.out | awk '{print "."$1,$3}' | sed 's/$/\r/'</pre>
+            </div>
+        </div>
+        </td>
+      </tr>
       </tbody>
 </table>
 </body>
