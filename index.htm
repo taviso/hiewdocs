@@ -1003,6 +1003,24 @@
             You can use something like this to export names from an ELF file.<br>
                 <pre>$ nm a.out | awk '{print "."$1,$3}' | sed 's/$/\r/'</pre>
             </div>
+            <div class="note">
+            Here is an example hiew workflow using names.
+            <p>
+            I was using an ELF binary that printed a deprecation warning
+            everytime I used it, and I wanted to hide that warning.
+            <p>
+                <ol>
+                    <li>First, I exported the symbol names using nm.</li>
+                    <li>I imported those symbols using <span class="inline key">F12</span>.</li>
+                    <li>I found the message I wanted to hide with <span class="inline key">F7</span></li>
+                    <li>I pressed <span class="inline key">F6</span> to find references to that string.</li>
+                    <li>Browsing the code around the reference, I found the call to printf.</li>
+                    <li>I entered edit mode with <span class="inline key">F3</span>, then NOPped the call instruction with <span class="inline key">Alt</span><span class="inline key">F2</span>.</li>
+                    <li>Saved the file with <span class="inline key">F9</span>.
+                </ol>
+            </p>
+            </div>
+            </div>
         </div>
         </td>
       </tr>
