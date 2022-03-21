@@ -405,18 +405,58 @@
             See also, <span class="inline key">Ctrl</span><span class="inline key">Home</span>.
             </br>
             <div class="note">
-            Perhaps you wanted to replace the last few bytes of a file with another file...
+            Here is an example workflow, I wanted to replace the last few bytes of a file with
+            another file...
             <p>
                 <ol>
-                    <li>First move to the end of the file, <span class="inline key">Ctrl</span><span class="inline key">End</span>.</li>
+                    <li>
+                        First move to the end of the file,
+                        <span class="inline key">Ctrl</span><span class="inline key">End</span>.
+                    </li>
                     <li>Start a new selection with <span class="inline key">*</span>.</li>
-                    <li>Move backwards, or enter a relative number of bytes with <span class="inline key">F5</span>. For example, to move backwards 123 bytes use: <pre>-123t</pre></li>
-                    <li>End the slection, <span class="inline key">*</span>.</li>
-                    <li>Make sure you're in overwrite mode (Hit <span class="inline key">Insert</span> to toggle).</li>
-                    <li>Press <span class="inline key">Ctrl</span><span class="inline key">F2</span> to overwrite with another file.</li>
+                    <li>
+                        Move backwards, or enter a relative number of bytes with
+                        <span class="inline key">F5</span>.
+                        </br>
+                        For example, to move backwards 123 bytes use
+                        <span class="inline key">F5</span>
+                        -123t
+                        <span class="inline key">Enter</span>.
+                        </br>
+                        The 't' suffix means decimal, the default input base is hex).
+                    </li>
+                    <li>End the slection with <span class="inline key">*</span>.</li>
+                    <li>
+                        Make sure you're in overwrite mode, hit
+                        <span class="inline key">Insert</span> to toggle.
+                    </li>
+                    <li>
+                        Press <span class="inline key">Ctrl</span><span class="inline key">F2</span>
+                        to open the ReadBlk dialog, you will be prompted to enter the
+                        relevant parameters.
+                    </li>
                 </ol>
             </p>
-            If you wanted to initialize the selection first (because the new file is shorter), just use <span class="inline key">Alt</span><span class="inline key">F2</span>.
+            <p>
+            What should you do if the section you're replacing and the new file are different sizes?
+            <ul>
+                <li>
+                    If you wanted to initialize the selection first
+                    because the new file is smaller, just use
+                    <span class="inline key">Alt</span><span class="inline key">F2</span>.
+                </li>
+                <li>
+                    If you wanted to shrink or grow the selection, delete it with
+                    <span class="inline key">Shift</span><span class="inline key">F2</span>
+                    and then switch to insert mode with <span class="inline key">Insert</span>.
+                </li>
+                <li>
+                    The default settings will simply truncate the new file and warn you. That
+                    means unused parts of the new file will be unread, and old bytes will
+                    be left as they were.
+                </li>
+            </ul>
+            </p>
         </div>
         </td>
       </tr>
@@ -633,7 +673,8 @@
             </div>
             <div class="note">
             <span
-            class="inline key">Alt</span><span class="inline key">F7</span> changes the next search direction. It displays the direction in the status.
+            class="inline key">Alt</span><span class="inline key">F7</span> changes the next search
+            direction. It displays the direction in the status.
             </div>
         </div>
         </td>
