@@ -403,6 +403,20 @@
             Move the cursor to the end of the file.
             <br/>
             See also, <span class="inline key">Ctrl</span><span class="inline key">Home</span>.
+            </br>
+            <div class="note">
+            Perhaps you wanted to replace the last few bytes of a file with another file...
+            <p>
+                <ol>
+                    <li>First move to the end of the file, <span class="inline key">Ctrl</span><span class="inline key">End</span>.</li>
+                    <li>Start a new selection with <span class="inline key">*</span>.</li>
+                    <li>Move backwards, or enter a relative number of bytes with <span class="inline key">F5</span>. For example, to move backwards 123 bytes use: <pre>-123t</pre></li>
+                    <li>End the slection, <span class="inline key">*</span>.</li>
+                    <li>Make sure you're in overwrite mode (Hit <span class="inline key">Insert</span> to toggle).</li>
+                    <li>Press <span class="inline key">Ctrl</span><span class="inline key">F2</span> to overwrite with another file.</li>
+                </ol>
+            </p>
+            If you wanted to initialize the selection first (because the new file is shorter), just use <span class="inline key">Alt</span><span class="inline key">F2</span>.
         </div>
         </td>
       </tr>
