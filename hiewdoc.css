@@ -10,6 +10,16 @@ table {
     border-collapse: collapse;
 }
 
+.keywords {
+    margin: 1em;
+    padding: 0.5em;
+}
+
+.keywords::before {
+    content: "Keywords: ";
+    font-weight: bold;
+}
+
 .note {
     border-style: solid;
     border-width: thin;

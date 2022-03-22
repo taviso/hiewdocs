@@ -46,9 +46,6 @@
     <input class="filter" type="checkbox" id="navigate" onchange="filter()" checked=true>
         <label for="navigate">Navigating around files.</label>
         <br/>
-    <input class="filter" type="checkbox" id="vt100" onchange="filter()" checked=true>
-        <label for="vt100">Requires a helper plugin when used in a vt terminal.</label>
-        <br/>
     <input class="filter" type="checkbox" id="edit" onchange="filter()" checked=true>
         <label for="edit">Can be used in editmode.</label>
         <br/>
@@ -107,7 +104,7 @@
         </div>
         </td>
       </tr>
-      <tr data-tags="block hex code vt100">
+      <tr data-tags="block hex code">
         <td class="shortcut"><span>ctrl</span><span>*</span></td>
         <td data-demo="block-all" class="description">
         <div>
@@ -123,7 +120,7 @@
         </div>
         </td>
       </tr>
-      <tr data-tags="block hex code vt100">
+      <tr data-tags="block hex code">
         <td class="shortcut"><span>alt</span><span>*</span></td>
         <td data-demo="block-all" class="description">
         <div>
@@ -229,6 +226,9 @@
             If you use this shortcut in code view without an active block, the
             current instruction will be <code>nop</code>ped, this is handy if
             you want to eliminate an unwanted <code>call</code>.
+            <div class="keywords">
+                Replace, Fill, Initialize, Pattern, Nop
+            </div>
         </div>
         </td>
       </tr>
@@ -352,7 +352,7 @@
         </div>
         </td>
       </tr>
-      <tr data-tags="text hex code vt100">
+      <tr data-tags="text hex code">
         <td class="shortcut"><span>ctrl</span><span>.</span></td>
         <td data-demo="record-macro" class="description">
         <div>
@@ -423,7 +423,7 @@
                         -123t
                         <span class="inline key">Enter</span>.
                         </br>
-                        The 't' suffix means decimal, the default input base is hex).
+                        The 't' suffix means decimal, the default input base is hex.
                     </li>
                     <li>End the slection with <span class="inline key">*</span>.</li>
                     <li>
@@ -637,7 +637,7 @@
         </div>
         </td>
       </tr>
-      <tr data-tags="hex code text vt100">
+      <tr data-tags="hex code text">
         <td class="shortcut"><span>ctrl</span><span>alt</span></td>
         <td class="description">
         <div>
@@ -647,7 +647,7 @@
         </div>
         </td>
       </tr>
-      <tr data-tags="hex code text vt100">
+      <tr data-tags="hex code text">
         <td class="shortcut"><span>ctrl</span><span>BkSp</span></td>
         <td data-demo="file-history" class="description">
         <div>
@@ -994,14 +994,20 @@
             <p>
             The rules:
             <ul>
-                <li>At the start of each loop iteration, AL/AX/EAX/RAX gets the data under the current pointer.</li>
+                <li>
+                    At the start of each loop iteration, AL/AX/EAX/RAX gets the data under
+                    the current pointer.
+                </li>
                 <li>The code loops automatically at position 1 if it's not specified.</li>
-                <li>At the end of the loop, the current value in AL/AX/EAX/RAX gets written at the pointer
-                before it's incremented.</li>
+                <li>
+                    At the end of the loop, the current value in AL/AX/EAX/RAX gets written
+                    at the pointerbefore it's incremented.
+                </li>
             </ul>
             </p>
             <p>
-            For example, this code in Byte mode will fill the current block with <code>00 01 02 03 04</code>...:
+            For example, this code in Byte mode will fill the current block with
+            <code>00 01 02 03 04</code>...:
             </p>
             <p>
             <code>
